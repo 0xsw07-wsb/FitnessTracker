@@ -2,10 +2,11 @@ package pl.wsb.fitnesstracker.healthmetrics;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-        import lombok.AccessLevel;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import pl.wsb.fitnesstracker.user.api.User;
 
 import java.time.LocalDate;
 
@@ -21,8 +22,9 @@ public class HealthMetrics {
     @Nullable
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userid;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
@@ -33,21 +35,20 @@ public class HealthMetrics {
     @Column(name = "height", nullable = false)
     private Long height;
 
-    @Column(nullable = false, unique = true)
-    private Long healthrate;
+    @Column(name = "heartRate", nullable = false)
+    private Long heartRate;
 
     public HealthMetrics(
-            final Long userid,
+            final User user,
             final LocalDate date,
             final Long weight,
             final Long height,
-            final Long healthrate) {
-
-        this.userid = userid;
+            final Long heartRate) {
+        this.user = user;
         this.date = date;
         this.weight = weight;
         this.height = height;
-        this.healthrate = healthrate;
+        this.heartRate = heartRate;
     }
 
 }
