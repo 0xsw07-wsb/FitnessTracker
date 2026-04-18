@@ -50,6 +50,4 @@ public class HealthMetrics {
         this.height = height;
         this.heartRate = heartRate;
     }
-
 }
-
