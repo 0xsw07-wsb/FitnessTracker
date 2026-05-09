@@ -11,4 +11,12 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query("SELECT e FROM Event e WHERE e.startTime > :now ORDER BY e.startTime")
     List<Event> findUpcoming(@Param("now") LocalDate now);
+
+    @Query(
+        value = "SELECT e.name, COUNT(ue.id) " +
+                "FROM event e LEFT JOIN user_event ue ON ue.event_id = e.id " +
+                "GROUP BY e.id, e.name",
+        nativeQuery = true
+    )
+    List<Object[]> findEventNamesWithParticipantCount();
 }
